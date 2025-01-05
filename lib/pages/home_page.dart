@@ -10,6 +10,7 @@ class Homepage extends StatefulWidget {
 class _Homepage extends State<Homepage> {
   _Homepage();
   late double _deviceHeight;
+  double _buttonRadius = 100;
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +45,20 @@ class _Homepage extends State<Homepage> {
 
   Widget _circularButton() {
     return GestureDetector(
-      child: Container(
-        height: 120,
-        width: 120,
+      onTap: () {
+        setState(() {
+          _buttonRadius += _buttonRadius == 100 ? 100 : -100;
+        });
+      },
+      child: AnimatedContainer(
+        duration: const Duration(seconds: 2),
+        curve: Curves.bounceInOut,
+        height: _buttonRadius,
+        width: _buttonRadius,
         margin: const EdgeInsets.only(top: 50.0),
         decoration: BoxDecoration(
           color: Colors.purple,
-          borderRadius: BorderRadius.circular(100.0),
+          borderRadius: BorderRadius.circular(_buttonRadius),
         ),
         child: const Center(
           child: Text(
