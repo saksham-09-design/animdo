@@ -11,6 +11,7 @@ class _Homepage extends State<Homepage> {
   _Homepage();
   late double _deviceHeight;
   double _buttonRadius = 100;
+  final Tween<double> _backgroundCircle = Tween<double>(begin: 0.0, end: 0.3);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class _Homepage extends State<Homepage> {
           children: [
             _pageBackground(),
             Align(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.center,
               child: _circularButton(),
             ),
           ],
@@ -40,7 +41,22 @@ class _Homepage extends State<Homepage> {
   }
 
   Widget _pageBackground() {
-    return Container(color: Colors.blue);
+    return TweenAnimationBuilder(
+      tween: _backgroundCircle,
+      duration: const Duration(seconds: 2),
+      builder: (context, double scale, child) {
+        return Transform.scale(
+          scale: scale,
+          child: child,
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(500),
+          color: Colors.blue,
+        ),
+      ),
+    );
   }
 
   Widget _circularButton() {
